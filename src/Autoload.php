@@ -2,6 +2,8 @@
 
 namespace nostriphant\FunctionalAlternate;
 
+use function expect;
+
 expect()->extend('toHaveState', function (mixed ...$expected_state) {
     foreach (call_user_func_array($this->value, $state_mocks = generate_state_mocks(...$expected_state)) as $msg) {
         

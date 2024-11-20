@@ -22,7 +22,14 @@
             "email": "rik@nostriphant.dev"
         }
     ],
+    "require-dev": {
+        "pestphp/pest-dev-tools": "^3.0.0"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "config": {
+        "sort-packages": true,
+        "preferred-install": "dist",
         "allow-plugins": {
             "pestphp/pest-plugin": true
         }

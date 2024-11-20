@@ -23,7 +23,7 @@
         }
     ],
     "require-dev": {
-        "pestphp/pest-dev-tools": "^3.0.0"
+        "pestphp/pest": "^2.35"
     },
     "minimum-stability": "dev",
     "prefer-stable": true,

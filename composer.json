@@ -1,0 +1,35 @@
+{
+    "name": "nostriphant/functional-alternate",
+    "description": "Functionally alternating logical paths",
+    "type": "library",
+    "require": {
+        "php": "^8.3"
+    },
+    "require-dev": {
+        "pestphp/pest": "^2.35"
+    },
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "nostriphant\\FunctionalAlternate\\": "src/",
+            "nostriphant\\FunctionalAlternateTests\\": "tests/"
+        },
+        "files": ["src/Autoload.php"]
+    },
+    "authors": [
+        {
+            "name": "Rik Meijer",
+            "email": "rik@nostriphant.dev"
+        }
+    ],
+    "config": {
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "scripts": {
+        "test": [
+            "./vendor/bin/pest"
+        ]
+    }
+}

@@ -2,6 +2,8 @@
 
 use nostriphant\FunctionalAlternate\Alternate;
 
+\nostriphant\FunctionalAlternate\extend_pest('expect');
+
 it('usage works', function () {
     $state = Alternate::state1('Hello World!');
 

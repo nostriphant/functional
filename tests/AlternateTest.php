@@ -4,7 +4,7 @@ namespace nostriphant\FunctionalTests;
 
 use nostriphant\Functional\Alternate;
 
-extend_pest('expect');
+Pest::extend('expect');
 
 it('usage works', function () {
     $state = Alternate::state1('Hello World!');

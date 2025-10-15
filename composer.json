@@ -15,9 +15,6 @@
             "nostriphant\\FunctionalTests\\": "tests/"
         }
     },
-    "autoload-dev": {
-        "files": ["tests/Autoload.php"]
-    },
     "authors": [
         {
             "name": "Rik Meijer",

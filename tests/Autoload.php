@@ -1,6 +1,6 @@
 <?php
 
-namespace nostriphant\FunctionalAlternate;
+namespace nostriphant\FunctionalTests;
 
 use function expect;
 

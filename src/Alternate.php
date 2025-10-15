@@ -1,6 +1,6 @@
 <?php
 
-namespace nostriphant\FunctionalAlternate;
+namespace nostriphant\Functional;
 
 readonly class Alternate {
 

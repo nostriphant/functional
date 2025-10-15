@@ -1,8 +1,10 @@
 <?php
 
-use nostriphant\FunctionalAlternate\Alternate;
+namespace nostriphant\FunctionalTests;
 
-\nostriphant\FunctionalAlternate\extend_pest('expect');
+use nostriphant\Functional\Alternate;
+
+extend_pest('expect');
 
 it('usage works', function () {
     $state = Alternate::state1('Hello World!');

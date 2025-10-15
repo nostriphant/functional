@@ -1,6 +1,6 @@
 {
-    "name": "nostriphant/functional-alternate",
-    "description": "Functionally alternating logical paths",
+    "name": "nostriphant/functional",
+    "description": "Functional helper classes for nostriphant projects",
     "type": "library",
     "require": {
         "php": "^8.3"
@@ -11,10 +11,12 @@
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "nostriphant\\FunctionalAlternate\\": "src/",
-            "nostriphant\\FunctionalAlternateTests\\": "tests/"
-        },
-        "files": ["src/Autoload.php"]
+            "nostriphant\\Functional\\": "src/",
+            "nostriphant\\FunctionalTests\\": "tests/"
+        }
+    },
+    "autoload-dev": {
+        "files": ["tests/Autoload.php"]
     },
     "authors": [
         {
@@ -22,9 +24,6 @@
             "email": "rik@nostriphant.dev"
         }
     ],
-    "require-dev": {
-        "pestphp/pest": "^2.35"
-    },
     "minimum-stability": "dev",
     "prefer-stable": true,
     "config": {

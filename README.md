@@ -1,10 +1,10 @@
 # functional-alternate
-Functionally alternating logical paths
+Functional helper classes for nostriphant projects
 
 ## Usage
 
 ```
-use nostriphant\FunctionalAlternate\Alternate;
+use nostriphant\Functional\Alternate;
 
 $state = Alternate::state1('Hello World!');
 

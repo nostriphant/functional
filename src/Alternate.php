@@ -16,7 +16,7 @@ readonly class Alternate {
             function(callable ...$callbacks) use ($name, $arguments) { 
                 yield from $callbacks[$name](...$arguments);
             }, 
-            $name !== 'default' ? self::default(...$arguments) : function() { yield from []; }
+            $name !== 'default' ? self::default(...$arguments) : function(callable ...$callbacks) { yield from []; }
         ));
     }
 

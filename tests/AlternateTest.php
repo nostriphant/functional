@@ -47,6 +47,7 @@ it('usage works', function () {
 it('can alternate execution paths', function () {
     $alternate = Alternate::first('Hello World');
     expect($alternate)->toHaveState(first: ['Hello World']);
+    expect($alternate)->not()->toHaveState(second: ['Hello World']);
 });
 
 it('ignores undefined execution paths', function () {

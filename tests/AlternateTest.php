@@ -13,9 +13,23 @@ it('usage works', function () {
         yield $message;
     });
 
-    foreach ($evaluate as $message) {
+    foreach ($evaluate as $messages => $message) {
         expect($message)->toBe('Hello World!');
     }
+    expect($messages)->toBe(0);
+});
+
+it('default works', function () {
+    $state = Alternate::state1('Hello Wsfsdfdforld!');
+
+    $evaluate = $state(default: function (string $message) {
+        yield 'Hello World!';
+    });
+
+    foreach ($evaluate as $messages => $message) {
+        expect($message)->toBe('Hello World!');
+    }
+    expect($messages)->toBe(0);
 });
 
 it('can alternate execution paths', function () {
@@ -26,9 +40,10 @@ it('can alternate execution paths', function () {
 
 it('ignores undefined execution paths', function () {
     $alternate = Alternate::second('Hello World');
-    foreach ($alternate() as $msg) {
+    foreach ($alternate() as $msgs => $msg) {
 
     }
+    expect($msgs)->toBeNull();
 })->throwsNoExceptions();
 
 it('can fallback to a default execution paths', function () {

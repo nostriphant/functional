@@ -15,11 +15,11 @@ final readonly class When {
         $this->true = \Closure::fromCallable($true);
     }
     
-    public function __invoke(mixed $variable): mixed {
-        return (match (($this->test)($variable)) {
+    public function __invoke(mixed ...$variables): mixed {
+        return (match (($this->test)(...$variables)) {
             true => ($this->true),
             false => ($this->false)
-        })($variable);
+        })(...$variables);
     }
     
 }

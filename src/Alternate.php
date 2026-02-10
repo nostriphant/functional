@@ -10,14 +10,24 @@ readonly class Alternate {
         
     }
 
-    static function __callStatic(string $name, array $arguments): self {
-        return new self(fn(callable ...$callbacks) => yield from isset($callbacks[$name]) ? $callbacks[$name](...$arguments) : $callbacks['default'](...$arguments));
+    static function __callStatic(string $name, array $arguments): When {
+        $when = new When(
+            fn(callable ...$callbacks) => isset($callbacks[$name]), 
+            function(callable ...$callbacks) use ($name, $arguments) { 
+                yield from $callbacks[$name](...$arguments);
+            }, 
+                    
+            function(callable ...$callbacks) use ($arguments) { 
+                if (array_key_exists('default', $callbacks) === false) {
+                    yield from [];
+                } else {
+                    yield from $callbacks['default'](...$arguments);
+                }
+            });
+        return $when;
     }
 
     public function __invoke(callable ...$callbacks) {
-        if (array_key_exists('default', $callbacks) === false) {
-            $callbacks['default'] = fn() => [];
-        }
         yield from ($this->callback)(...$callbacks);
     }
 }

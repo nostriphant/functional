@@ -3,7 +3,7 @@
     "description": "Functional helper classes for nostriphant projects",
     "type": "library",
     "require": {
-        "php": "^8.3"
+        "php": "^8.4"
     },
     "require-dev": {
         "pestphp/pest": "^2.35"

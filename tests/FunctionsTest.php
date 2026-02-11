@@ -20,3 +20,17 @@ it('can iterate and map over iterator', function () {
     expect($iterated[1])->toBe('c');
     expect($iterated[2])->toBe('d');
 });
+
+
+it('can merge two or more iterators', function () {
+    $iterator1 = new \ArrayIterator(['a', 'b', 'c']);
+    $iterator2 = new \ArrayIterator(['d', 'e', 'f']);
+    $merged = iterator_to_array(\nostriphant\Functional\Functions::iterator_merge($iterator1, $iterator2));
+    
+    expect($merged[0])->toBe('a');
+    expect($merged[1])->toBe('b');
+    expect($merged[2])->toBe('c');
+    expect($merged[3])->toBe('d');
+    expect($merged[4])->toBe('e');
+    expect($merged[5])->toBe('f');
+});

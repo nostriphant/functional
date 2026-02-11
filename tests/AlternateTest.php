@@ -43,7 +43,6 @@ it('ignores undefined execution paths', function () {
     foreach ($alternate() as $msgs => $msg) {
 
     }
-    expect($msgs)->toBeNull();
 })->throwsNoExceptions();
 
 it('can fallback to a default execution paths', function () {

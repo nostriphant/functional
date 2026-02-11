@@ -10,6 +10,12 @@ readonly class Functions {
         }
     }
     
+    static function iterator_walk(\Traversable $iterator, callable $callback, mixed ...$args) {
+        foreach ($iterator as $key => $element) {
+            $callback($element, $key, ...$args);
+        }
+    }
+    
     static function iterator_merge(\Traversable ...$iterators) : \Traversable {
         return new class($iterators) implements \IteratorAggregate {
            

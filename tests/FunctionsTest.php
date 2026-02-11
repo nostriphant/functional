@@ -22,6 +22,16 @@ it('can iterate and map over iterator', function () {
 });
 
 
+it('can walk over iterator and apply a function to each element', function () {
+    $elements = ['a', 'b', 'c'];
+    $iterator = new \ArrayIterator($elements);
+    
+    \nostriphant\Functional\Functions::iterator_walk($iterator, fn(string $element, int $index) => expect($element)->toBe($elements[$index]));
+    
+    \nostriphant\Functional\Functions::iterator_walk($iterator, fn(string $element, int $index, string $prefix) => expect($prefix . $element)->toBe('prefix_' . $elements[$index]), 'prefix_');
+});
+
+
 it('can merge two or more iterators', function () {
     $iterator1 = new \ArrayIterator(['a', 'b', 'c']);
     $iterator2 = new \ArrayIterator(['d', 'e', 'f']);

@@ -4,6 +4,15 @@ namespace nostriphant\Functional;
 
 readonly class Functions {
     
+
+    static function in_range(string|int|float $value, string|int|float $start, string|int|float $end, int|float $step = 1): bool {
+        return in_array($value, range($start, $end, $step));
+    }
+    
+    
+    
+    
+    
     /**
      * 
      * @deprecated 2.6.0
@@ -29,10 +38,6 @@ readonly class Functions {
      */
     static function iterator_merge(\Traversable ...$iterators) : \Traversable {
         return Iterator::merge(...$iterators);
-    }
-
-    static function in_range(string|int|float $value, string|int|float $start, string|int|float $end, int|float $step = 1): bool {
-        return in_array($value, range($start, $end, $step));
     }
     
 }

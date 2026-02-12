@@ -4,33 +4,31 @@ namespace nostriphant\Functional;
 
 readonly class Functions {
     
+    /**
+     * 
+     * @deprecated 2.6.0
+     * @see \nostriphant\FunctionalIterator::map
+     */
     static function iterator_map(\Traversable $iterator, callable $callback): \Traversable {
-        foreach ($iterator as $key => $value) {
-            yield $key => $callback($value);
-        }
+        return Iterator::map($iterator, $callback);
     }
     
+    /**
+     * 
+     * @deprecated 2.6.0
+     * @see \nostriphant\FunctionalIterator::walk
+     */
     static function iterator_walk(\Traversable $iterator, callable $callback, mixed ...$args) {
-        foreach ($iterator as $key => $element) {
-            $callback($element, $key, ...$args);
-        }
+        return Iterator::walk($iterator, $callback, ...$args);
     }
     
+    /**
+     * 
+     * @deprecated 2.6.0
+     * @see \nostriphant\FunctionalIterator::merge
+     */
     static function iterator_merge(\Traversable ...$iterators) : \Traversable {
-        return new class($iterators) implements \IteratorAggregate {
-           
-            
-            public function __construct(private array $iterators) {
-            }
-            
-            public function getIterator(): \Traversable {
-                foreach ($this->iterators as $iterator) {
-                    foreach ($iterator as $entry) {
-                        yield $entry;
-                    }
-                }
-            }
-        };
+        return Iterator::merge(...$iterators);
     }
 
     static function in_range(string|int|float $value, string|int|float $start, string|int|float $end, int|float $step = 1): bool {

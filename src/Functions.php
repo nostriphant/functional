@@ -9,10 +9,6 @@ readonly class Functions {
         return in_array($value, range($start, $end, $step));
     }
     
-    
-    
-    
-    
     /**
      * 
      * @deprecated 2.6.0

@@ -16,3 +16,13 @@ it('store and call that item', function () {
     expect($index('foo')())->toBe('bar');
     expect($index2('foo')())->toBe('bur');
 });
+
+
+it('is accessable as an array', function () {
+    $index = new Index();
+    
+    $index['foo'] = fn() => 'bar';
+    
+    expect($index('foo')())->toBe('bar');
+    expect($index['foo']())->toBe('bar');
+});

@@ -5,19 +5,19 @@ namespace nostriphant\Functional;
 
 class Iterator {
 
-    static function map(\Traversable $iterator, callable $callback): \Traversable {
+    static function map(\Traversable|array $iterator, callable $callback): \Traversable {
         foreach ($iterator as $key => $value) {
             yield $key => $callback($value);
         }
     }
     
-    static function walk(\Traversable $iterator, callable $callback, mixed ...$args) {
+    static function walk(\Traversable|array $iterator, callable $callback, mixed ...$args) {
         foreach ($iterator as $key => $element) {
             $callback($element, $key, ...$args);
         }
     }
     
-    static function merge(\Traversable ...$iterators) : \Traversable {
+    static function merge(\Traversable|array ...$iterators) : \Traversable {
         return new class($iterators) implements \IteratorAggregate {
            
             

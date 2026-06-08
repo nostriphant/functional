@@ -18,7 +18,7 @@ it('partially applies arguments right', function () {
 });
 
 class Substract {
-    public function __construct(public int $a) {
+    public function __construct(private int $a) {
     }
     
     public function __invoke(int $a, int $b): mixed {
@@ -44,7 +44,7 @@ it('partially applies arguments right (type hinting safe)', function () {
 });
 
 readonly class SubstractRO {
-    public function __construct(public int $a) {
+    public function __construct(private int $a) {
     }
     
     public function __invoke(int $a, int $b): mixed {

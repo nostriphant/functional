@@ -24,10 +24,11 @@ class Partial {
         
         eval(($readonly?'readonly ':'') . 'class ' . $wrapper_class . ' extends '. $wrapped_class .' {
                 public function __construct(private mixed $f, private array $partial_args) {
-                    foreach ((new \ReflectionObject($f))->getProperties() as $property) {
-                        $name = $property->getName();
-                        $this->$name = $property->getValue($f);
-                    }
+
+                }
+                
+                public function __get(string $name) : mixed {
+                    return (new \ReflectionObject($this->f))->getProperty($name)->getValue($this->f);
                 }
                 
                 public function __invoke(...$args): mixed {

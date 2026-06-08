@@ -17,13 +17,19 @@ class Partial {
     }
     
     static function wrap_code(string $wrapped_class, string $apply_code) : string {
-            $wrapper_class = '_'.uniqid();
+        $wrapper_class = '_'.uniqid();
             
         $readonly = (new \ReflectionClass($wrapped_class))->isReadOnly();
+        
+        
         eval(($readonly?'readonly ':'') . 'class ' . $wrapper_class . ' extends '. $wrapped_class .' {
-                function __construct(private mixed $f, private array $partial_args) {
-                
+                public function __construct(private mixed $f, private array $partial_args) {
+                    foreach ((new \ReflectionObject($f))->getProperties() as $property) {
+                        $name = $property->getName();
+                        $this->$name = $property->getValue($f);
+                    }
                 }
+                
                 public function __invoke(...$args): mixed {
                     return call_user_func($this->f, '.$apply_code.');
                 }

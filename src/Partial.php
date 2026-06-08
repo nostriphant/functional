@@ -16,6 +16,20 @@ class Partial {
         };
     }
     
+    static function at(callable $f, int $position, ...$partial_args) {
+        return match($f instanceof \Closure) {
+            true => fn(mixed ...$args) => call_user_func($f, ...array_slice($args, 0, $position), ...$partial_args, ...array_slice($args, $position)),
+            false => new (self::wrap_code($f::class, '...array_slice($args, 0, '.$position.'), ...$this->partial_args, ...array_slice($args, '.$position.')'))($f, $partial_args)
+        };
+    }
+    
+    public static function __callStatic(string $name, array $arguments): mixed {
+        if (str_starts_with($name, 'at')) {
+            $position = substr($name, 2);
+            return self::at(array_shift($arguments), $position, ...$arguments);
+        }
+    }
+    
     static function wrap_code(string $wrapped_class, string $apply_code) : string {
         $wrapper_class = '_'.uniqid();
             

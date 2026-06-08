@@ -17,6 +17,36 @@ it('partially applies arguments right', function () {
     expect($f_applied(4))->toBe(3);
 });
 
+
+class SubstractMultiple {
+    public function __construct(private int $a) {
+    }
+    
+    public function __invoke(int $a, int $b, int $c, int $d): mixed {
+        return $this->a - $a - $b - $c - $d;
+    }
+}
+
+
+it('partially applies arguments on X position', function () {
+    $f = fn(int $a, int $b, int $c) => $a - $b - $c;
+    $f_applied = \nostriphant\Functional\Partial::at1($f, 1);
+    expect($f_applied(4, -3))->toBe(6);
+});
+
+it('partially applies multiple arguments on X position', function () {
+    $f = fn(int $a, int $b, int $c, int $d) => $a - $b - $c - $d;
+    $f_applied = \nostriphant\Functional\Partial::at1($f, 1, 2);
+    expect($f_applied(4, -3))->toBe(4);
+});
+
+it('partially applies multiple arguments on X position (type hinting safe)', function () {
+    $f = new SubstractMultiple(10);
+    $f_applied = \nostriphant\Functional\Partial::at1($f, 1, 2);
+    expect($f_applied(4, -3))->toBe(6);
+    expect($f_applied->a)->toBe(10);
+});
+
 class Substract {
     public function __construct(private int $a) {
     }

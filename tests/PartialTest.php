@@ -47,11 +47,15 @@ it('partially applies multiple arguments on X position (type hinting safe)', fun
     expect($f_applied->a)->toBe(10);
 });
 
-class Substract {
+interface Substrator {
+    function __invoke(int $a, int $b): int;
+}
+
+class Substract implements Substrator {
     public function __construct(private int $a) {
     }
     
-    public function __invoke(int $a, int $b): mixed {
+    public function __invoke(int $a, int $b): int {
         return $this->a - $a - $b;
     }
 }

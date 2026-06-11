@@ -33,8 +33,12 @@ class Partial {
     static function wrap_code(string $wrapped_class, string $apply_code) : string {
         $wrapper_class = '_'.uniqid();
             
-        $readonly = (new \ReflectionClass($wrapped_class))->isReadOnly();
+        $reflection_class = (new \ReflectionClass($wrapped_class));
         
+        
+        
+        $readonly = $reflection_class->isReadOnly();
+        $return_type = $reflection_class->getMethod('__invoke')->getReturnType();
         
         eval(($readonly?'readonly ':'') . 'class ' . $wrapper_class . ' extends '. $wrapped_class .' {
                 public function __construct(private mixed $f, private array $partial_args) {
@@ -45,7 +49,7 @@ class Partial {
                     return (new \ReflectionObject($this->f))->getProperty($name)->getValue($this->f);
                 }
                 
-                public function __invoke(...$args): mixed {
+                public function __invoke(...$args): '.$return_type.' {
                     return call_user_func($this->f, '.$apply_code.');
                 }
             }');

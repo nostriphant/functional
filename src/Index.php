@@ -2,7 +2,7 @@
 
 namespace nostriphant\Functional;
 
-final class Index implements \ArrayAccess {
+final class Index implements \ArrayAccess, \Countable {
    
     private array $index = [];
     
@@ -32,4 +32,10 @@ final class Index implements \ArrayAccess {
     public function offsetUnset(mixed $offset): void {
         unset($this->index[$offset]);
     }
+
+    #[\Override]
+    public function count(): int {
+        return count($this->index);
+    }
+
 }

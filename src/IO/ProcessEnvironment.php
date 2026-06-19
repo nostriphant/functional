@@ -7,7 +7,7 @@ readonly class ProcessEnvironment {
     
     private array $env;
         
-    public function __construct(private mixed $in, string ...$env) {
+    public function __construct(private \nostriphant\Functional\IO $io, string ...$env) {
         $this->env = $env;
     }
     

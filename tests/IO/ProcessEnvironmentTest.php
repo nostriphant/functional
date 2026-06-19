@@ -5,7 +5,7 @@ namespace nostriphant\FunctionalTests\IO;
 use nostriphant\Functional\IO\ProcessEnvironment;
 
 it('can be initialized', function () {
-    $process = new ProcessEnvironment(function() {});
+    $process = new ProcessEnvironment(new \nostriphant\Functional\IO);
     expect($process)->toBeInstanceOf(ProcessEnvironment::class);
 });
 
@@ -15,10 +15,10 @@ it('receives an input channel', function () {
     fwrite($in, 'Hello World');
     fseek($in, 0);
     
-    $process = new ProcessEnvironment($in);
+    $process = new ProcessEnvironment(new \nostriphant\Functional\IO($in));
     
     $process(function() {
-        expect(fread($this->in, 100))->toBe('Hello World');
+        expect(fread($this->io->in, 100))->toBe('Hello World');
     });
 });
 
@@ -29,7 +29,7 @@ it('receives environment variables', function () {
     fwrite($in, 'Hello World');
     fseek($in, 0);
     
-    $process = new ProcessEnvironment($in, ENV_VAR: 'foo');
+    $process = new ProcessEnvironment(new \nostriphant\Functional\IO($in), ENV_VAR: 'foo');
     
     $process(function() {
         expect($this->env['ENV_VAR'])->toBe('foo');

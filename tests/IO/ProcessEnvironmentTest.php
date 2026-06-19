@@ -47,8 +47,21 @@ it('receives arguments', function () {
     });
 });
 
+it('prints output to the out stream', function () {
+    $out = fopen('php://memory', 'w+');
+    
+    $process = new ProcessEnvironment(new \nostriphant\Functional\IO(out:$out), ['foo', 'bar']);
+    
+    $process(function(string $arg1, string $arg2) {
+        print 'Output';
+    });
+    
+    fseek($out, 0);
+    expect(fread($out, 100))->toBe('Output');
+});
 
-it('prints to the error stream', function () {
+
+it('prints exceptions to the error stream', function () {
     $error = fopen('php://memory', 'w+');
     
     $process = new ProcessEnvironment(new \nostriphant\Functional\IO(err:$error), ['foo', 'bar']);

@@ -4,11 +4,24 @@ namespace nostriphant\Functional;
 
 readonly class IO {
     
-    public function __construct(public mixed $in = null, public mixed $out = null, public mixed $err = null) {
-        foreach (func_get_args() as $arg => $value) {
-            if (isset($value) && is_resource($value) === false) {
-                throw new \InvalidArgumentException('Argument $arg should be of type resource');
-            }
+    public mixed $in;
+    public mixed $out;
+    public mixed $err;
+    
+    public function __construct(mixed $in = null, mixed $out = null, mixed $err = null) {
+        $this->in = $in ?? fopen('php://memory', 'w+');
+        if (is_resource($this->in) === false) {
+            throw new \InvalidArgumentException('Argument $in should be of type resource');
+        }
+        
+        $this->out = $out ?? fopen('php://memory', 'w+');
+        if (is_resource($this->out) === false) {
+            throw new \InvalidArgumentException('Argument $out should be of type resource');
+        }
+        
+        $this->err = $err ?? fopen('php://memory', 'w+');
+        if (is_resource($this->err) === false) {
+            throw new \InvalidArgumentException('Argument $err should be of type resource');
         }
     }
 }

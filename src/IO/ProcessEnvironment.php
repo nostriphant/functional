@@ -18,7 +18,9 @@ readonly class ProcessEnvironment {
         }, $process);
         
         try {
+            ob_start(fn(string $buffer, int $phase) => fwrite($this->io->out, $buffer));
             $bound_process(...$this->arguments);
+            ob_end_clean();
         } catch (\Exception $e) {
             fwrite($this->io->err, $e->getMessage());
         }

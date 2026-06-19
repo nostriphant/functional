@@ -18,7 +18,7 @@ it('receives an input channel', function () {
     $process = new ProcessEnvironment(new \nostriphant\Functional\IO($in));
     
     $process(function() {
-        expect(fread($this->io->in, 100))->toBe('Hello World');
+        expect(fread($this->in, 100))->toBe('Hello World');
     });
 });
 

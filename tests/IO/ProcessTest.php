@@ -11,13 +11,15 @@ it('can be initialized', function () {
 
 
 it('receives an input channel', function () {
-    $process = new Process(function($in) {
-        expect(fread($in, 100))->toBe('Hello World');
-    });
-    
     $in = fopen('php://memory', 'w+');
     fwrite($in, 'Hello World');
     fseek($in, 0);
     
-    $process($in);
+    $process = new Process($in);
+    
+    $process(function() {
+        expect(fread($this->in, 100))->toBe('Hello World');
+    });
 });
+
+

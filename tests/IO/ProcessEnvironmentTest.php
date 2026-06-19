@@ -46,3 +46,17 @@ it('receives arguments', function () {
         expect($arg2)->toBe('bar');
     });
 });
+
+
+it('prints to the error stream', function () {
+    $error = fopen('php://memory', 'w+');
+    
+    $process = new ProcessEnvironment(new \nostriphant\Functional\IO(err:$error), ['foo', 'bar']);
+    
+    $process(function(string $arg1, string $arg2) {
+        throw new \Exception('Error');
+    });
+    
+    fseek($error, 0);
+    expect(fread($error, 100))->toBe('Error');
+});

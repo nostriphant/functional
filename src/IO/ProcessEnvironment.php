@@ -12,10 +12,16 @@ readonly class ProcessEnvironment {
     }
     
     public function __invoke(callable $callback) : void {
-        \Closure::bind($callback, $process = new class($this->io->in, $this->env) {
+        $bound_process = \Closure::bind($callback, $process = new class($this->io->in, $this->env) {
             public function __construct(private mixed $in, private array $env) {
             }
-        }, $process)(...$this->arguments);
+        }, $process);
+        
+        try {
+            $bound_process(...$this->arguments);
+        } catch (\Exception $e) {
+            fwrite($this->io->err, $e->getMessage());
+        }
     }
     
 }

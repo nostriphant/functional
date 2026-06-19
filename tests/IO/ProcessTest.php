@@ -23,3 +23,15 @@ it('receives an input channel', function () {
 });
 
 
+
+it('receives environment variables', function () {
+    $in = fopen('php://memory', 'w+');
+    fwrite($in, 'Hello World');
+    fseek($in, 0);
+    
+    $process = new Process($in, ENV_VAR: 'foo');
+    
+    $process(function() {
+        expect($this->env['ENV_VAR'])->toBe('foo');
+    });
+});

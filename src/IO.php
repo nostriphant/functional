@@ -5,15 +5,10 @@ namespace nostriphant\Functional;
 readonly class IO {
     
     public function __construct(public mixed $in = null, public mixed $out = null, public mixed $err = null) {
-        if (isset($in) && is_resource($in) === false) {
-            throw new \InvalidArgumentException('Argument $in should be of type resource');
-        } elseif (isset($out) && is_resource($out) === false) {
-            throw new \InvalidArgumentException('Argument $out should be of type resource');
-        } elseif (isset($err) && is_resource($err) === false) {
-            throw new \InvalidArgumentException('Argument $in should be of type resource');
+        foreach (func_get_args() as $arg => $value) {
+            if (isset($value) && is_resource($value) === false) {
+                throw new \InvalidArgumentException('Argument $arg should be of type resource');
+            }
         }
     }
-    
-  
-    
 }

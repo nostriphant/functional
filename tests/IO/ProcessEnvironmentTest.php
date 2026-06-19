@@ -5,7 +5,7 @@ namespace nostriphant\FunctionalTests\IO;
 use nostriphant\Functional\IO\ProcessEnvironment;
 
 it('can be initialized', function () {
-    $process = new ProcessEnvironment(new \nostriphant\Functional\IO);
+    $process = new ProcessEnvironment(new \nostriphant\Functional\IO(fopen('php://memory', 'r')));
     expect($process)->toBeInstanceOf(ProcessEnvironment::class);
 });
 

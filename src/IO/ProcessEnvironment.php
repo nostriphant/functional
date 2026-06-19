@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace nostriphant\functional\IO;
 
-readonly class Process {
+readonly class ProcessEnvironment {
     
     private array $env;
         

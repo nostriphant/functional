@@ -4,13 +4,13 @@ namespace nostriphant\Functional;
 
 class Partial {
     static function left(callable $f, mixed ...$partial_args) {
-        return match($f instanceof \Closure) {
+        return match($f instanceof \Closure || is_string($f)) {
             true => fn(mixed ...$args) => call_user_func($f, ...$partial_args, ...$args),
             false => new (self::wrap_code($f::class, '...$this->partial_args, ...$args'))($f, $partial_args)
         };
     }
     static function right(callable $f, mixed ...$partial_args) {
-        return match($f instanceof \Closure) {
+        return match($f instanceof \Closure || is_string($f)) {
             true => fn(mixed ...$args) => call_user_func($f, ...$args, ...$partial_args),
             false => new (self::wrap_code($f::class, '...$args, ...$this->partial_args'))($f, $partial_args)
         };

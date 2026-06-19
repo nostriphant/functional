@@ -12,11 +12,10 @@ readonly class ProcessEnvironment {
     }
     
     public function __invoke(callable $callback) : void {
-        $bound_process = \Closure::bind($callback, $process = new class($this->io->in, $this->env) {
+        \Closure::bind($callback, $process = new class($this->io->in, $this->env) {
             public function __construct(private mixed $in, private array $env) {
             }
-        }, $process);
-        $bound_process(...$this->arguments);
+        }, $process)(...$this->arguments);
     }
     
 }

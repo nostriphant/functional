@@ -22,16 +22,27 @@ it('receives an input channel', function () {
     });
 });
 
-
-
 it('receives environment variables', function () {
     $in = fopen('php://memory', 'w+');
     fwrite($in, 'Hello World');
     fseek($in, 0);
     
-    $process = new ProcessEnvironment(new \nostriphant\Functional\IO($in), ENV_VAR: 'foo');
+    $process = new ProcessEnvironment(new \nostriphant\Functional\IO($in), [], ENV_VAR: 'foo');
     
     $process(function() {
         expect($this->env['ENV_VAR'])->toBe('foo');
+    });
+});
+
+it('receives arguments', function () {
+    $in = fopen('php://memory', 'w+');
+    fwrite($in, 'Hello World');
+    fseek($in, 0);
+    
+    $process = new ProcessEnvironment(new \nostriphant\Functional\IO($in), ['foo', 'bar']);
+    
+    $process(function(string $arg1, string $arg2) {
+        expect($arg1)->toBe('foo');
+        expect($arg2)->toBe('bar');
     });
 });

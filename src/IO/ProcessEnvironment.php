@@ -7,7 +7,7 @@ readonly class ProcessEnvironment {
     
     private array $env;
         
-    public function __construct(private \nostriphant\Functional\IO $io, string ...$env) {
+    public function __construct(private \nostriphant\Functional\IO $io, private array $arguments = [], string ...$env) {
         $this->env = $env;
     }
     
@@ -16,7 +16,7 @@ readonly class ProcessEnvironment {
             public function __construct(private mixed $in, private array $env) {
             }
         }, $process);
-        $bound_process();
+        $bound_process(...$this->arguments);
     }
     
 }

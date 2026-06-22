@@ -4,29 +4,31 @@ namespace nostriphant\Functional;
 
 class Partial {
     static function left(callable $f, mixed ...$partial_args) {
-        return match($f instanceof \Closure || is_string($f)) {
-            true => fn(mixed ...$args) => call_user_func($f, ...$partial_args, ...$args),
-            false => new (self::wrap_code($f::class, '...$this->partial_args, ...$args'))($f, $partial_args)
-        };
+        if ($f instanceof \Closure || is_string($f) || is_array($f)) {
+            return fn(mixed ...$args) => call_user_func($f, ...$partial_args, ...$args);
+        } else {
+            return new (self::wrap_code($f::class, '...$this->partial_args, ...$args'))($f, $partial_args);
+        }
     }
     static function right(callable $f, mixed ...$partial_args) {
-        return match($f instanceof \Closure || is_string($f)) {
-            true => fn(mixed ...$args) => call_user_func($f, ...$args, ...$partial_args),
-            false => new (self::wrap_code($f::class, '...$args, ...$this->partial_args'))($f, $partial_args)
-        };
+        if ($f instanceof \Closure || is_string($f) || is_array($f)) {
+            return fn(mixed ...$args) => call_user_func($f, ...$args, ...$partial_args);
+        } else {
+            return new (self::wrap_code($f::class, '...$args, ...$this->partial_args'))($f, $partial_args);
+        }
     }
     
     static function at(callable $f, int $position, ...$partial_args) {
-        return match($f instanceof \Closure) {
-            true => fn(mixed ...$args) => call_user_func($f, ...array_slice($args, 0, $position), ...$partial_args, ...array_slice($args, $position)),
-            false => new (self::wrap_code($f::class, '...array_slice($args, 0, '.$position.'), ...$this->partial_args, ...array_slice($args, '.$position.')'))($f, $partial_args)
-        };
+        if ($f instanceof \Closure || is_string($f) || is_array($f)) {
+            return fn(mixed ...$args) => call_user_func($f, ...array_slice($args, 0, $position), ...$partial_args, ...array_slice($args, $position));
+        } else {
+            return new (self::wrap_code($f::class, '...array_slice($args, 0, '.$position.'), ...$this->partial_args, ...array_slice($args, '.$position.')'))($f, $partial_args);
+        }
     }
     
     public static function __callStatic(string $name, array $arguments): mixed {
         if (str_starts_with($name, 'at')) {
-            $position = substr($name, 2);
-            return self::at(array_shift($arguments), $position, ...$arguments);
+            return self::at(array_shift($arguments), substr($name, 2), ...$arguments);
         }
     }
     

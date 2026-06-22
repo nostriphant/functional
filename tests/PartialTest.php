@@ -2,6 +2,11 @@
 
 namespace nostriphant\FunctionalTests;
 
+class Calc {
+    static function substract(int $a, int $b) : int {
+        return $a - $b;
+    }
+}
 
 it('partially applies arguments left', function () {
     $f = fn(int $a, int $b) => $a - $b;
@@ -14,9 +19,13 @@ it('partially applies arguments left on regular functions', function () {
     expect($f_applied(2))->toBe('llo World');
 });
 
+it('partially applies arguments left on array-callables', function () {
+    $f_applied = \nostriphant\Functional\Partial::left([Calc::class, 'substract'], 1);
+    expect($f_applied(2))->toBe(-1);
+});
+
 it('partially applies arguments right', function () {
     $f = fn(int $a, int $b) => $a - $b;
-    
     $f_applied = \nostriphant\Functional\Partial::right($f, 1);
     expect($f_applied(4))->toBe(3);
 });
@@ -25,6 +34,11 @@ it('partially applies arguments right on regular functions', function () {
     $f_applied = \nostriphant\Functional\Partial::right('str_contains', 'Hello');
     expect($f_applied('Hello World'))->toBe(true);
     expect($f_applied('Bye World'))->toBe(false);
+});
+
+it('partially applies arguments right on array-callables', function () {
+    $f_applied = \nostriphant\Functional\Partial::right([Calc::class, 'substract'], 1);
+    expect($f_applied(4))->toBe(3);
 });
 
 
@@ -55,6 +69,17 @@ it('partially applies multiple arguments on X position (type hinting safe)', fun
     $f_applied = \nostriphant\Functional\Partial::at1($f, 1, 2);
     expect($f_applied(4, -3))->toBe(6);
     expect($f_applied->a)->toBe(10);
+});
+
+
+it('partially applies arguments on X position on regular functions', function () {
+    $f_applied = \nostriphant\Functional\Partial::at1('substr', 2);
+    expect($f_applied('Hello World'))->toBe('llo World');
+});
+
+it('partially applies arguments on X position on array-callables', function () {
+    $f_applied = \nostriphant\Functional\Partial::at2([Calc::class, 'substract'], 1);
+    expect($f_applied(4))->toBe(3);
 });
 
 interface Substrator {

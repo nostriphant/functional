@@ -21,8 +21,8 @@ class Process {
             public function __construct(private $process) {
                 $this->pid = proc_get_status($process)['pid'];
             }
-            public function __invoke(): void {
-                proc_terminate($this->process);         
+            public function __invoke(int $signal = 15): void {
+                proc_terminate($this->process, $signal);
                 proc_close($this->process);;
             }
         };

@@ -24,6 +24,16 @@ it('partially applies arguments left on array-callables', function () {
     expect($f_applied(2))->toBe(-1);
 });
 
+it('partially applies arguments left on invokable, anonymous objects', function () {
+    $object = new class {
+        public function __invoke(int $a, int $b) : int {
+            return $a - $b;
+        }
+    };
+    $f_applied = \nostriphant\Functional\Partial::left($object, 1);
+    expect($f_applied(2))->toBe(-1);
+});
+
 it('partially applies arguments right', function () {
     $f = fn(int $a, int $b) => $a - $b;
     $f_applied = \nostriphant\Functional\Partial::right($f, 1);
@@ -38,6 +48,16 @@ it('partially applies arguments right on regular functions', function () {
 
 it('partially applies arguments right on array-callables', function () {
     $f_applied = \nostriphant\Functional\Partial::right([Calc::class, 'substract'], 1);
+    expect($f_applied(4))->toBe(3);
+});
+
+it('partially applies arguments right on invokable, anonymous objects', function () {
+    $object = new class {
+        public function __invoke(int $a, int $b) : int {
+            return $a - $b;
+        }
+    };
+    $f_applied = \nostriphant\Functional\Partial::right($object, 1);
     expect($f_applied(4))->toBe(3);
 });
 
@@ -79,6 +99,16 @@ it('partially applies arguments on X position on regular functions', function ()
 
 it('partially applies arguments on X position on array-callables', function () {
     $f_applied = \nostriphant\Functional\Partial::at2([Calc::class, 'substract'], 1);
+    expect($f_applied(4))->toBe(3);
+});
+
+it('partially applies arguments on X position on invokable, anonymous objects', function () {
+    $object = new class {
+        public function __invoke(int $a, int $b) : int {
+            return $a - $b;
+        }
+    };
+    $f_applied = \nostriphant\Functional\Partial::at2($object, 1);
     expect($f_applied(4))->toBe(3);
 });
 

@@ -37,12 +37,16 @@ class Partial {
             
         $reflection_class = (new \ReflectionClass($wrapped_class));
         
+        $extends = '';
+        if (str_starts_with($wrapped_class, 'class@anonymous') === false) {
+            $extends = ' extends '. $wrapped_class;
+        }
         
         
         $readonly = $reflection_class->isReadOnly();
         $return_type = $reflection_class->getMethod('__invoke')->getReturnType();
         
-        eval(($readonly?'readonly ':'') . 'class ' . $wrapper_class . ' extends '. $wrapped_class .' {
+        eval(($readonly?'readonly ':'') . 'class ' . $wrapper_class . $extends . ' {
                 public function __construct(private mixed $f, private array $partial_args) {
 
                 }
